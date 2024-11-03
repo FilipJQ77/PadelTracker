@@ -1,0 +1,57 @@
+﻿@attribute [Route(Routes.Players)]
+@using PadelTracker.Common.Models
+@inject AppState AppState
+
+<PageTitle>Players</PageTitle>
+
+<MudTable Items="AppState.Players" Hover="true" Dense="true" Striped="true" Filter="FilterPlayers">
+    <ToolBarContent>
+        <MudText>Players</MudText>
+        <MudSpacer/>
+        <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" @bind-Value="SearchedPlayer" Placeholder="Search players"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Player, object>(x => x.Name)">Player name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel Enabled="false" SortBy="new Func<Player, object>(x => x.Name)">Games played</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel Enabled="false" SortBy="new Func<Player, object>(x => x.Name)">Games won</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            Delete player
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Player name">@context.Name</MudTd>
+        <MudTd DataLabel="Games played">@Random.Shared.Next(10, 20)</MudTd>
+        <MudTd DataLabel="Games won">@Random.Shared.Next(0, 11)</MudTd>
+        <MudTd DataLabel="Delete player">
+            <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.DeleteForever"/>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager/>
+    </PagerContent>
+</MudTable>
+
+
+<MudTextField @bind-Value="NewPlayerName" Label="New player name"/>
+<MudButton OnClick="AddPlayer">Add a player</MudButton>
+
+@code
+{
+    public string SearchedPlayer { get; set; } = string.Empty;
+
+    public string NewPlayerName { get; set; } = string.Empty;
+
+    public bool FilterPlayers(Player player) =>
+        player.Name.Contains(SearchedPlayer, StringComparison.InvariantCultureIgnoreCase);
+
+    public void AddPlayer()
+    {
+        AppState.Players.Add(new Player { Name = NewPlayerName });
+    }
+}

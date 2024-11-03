@@ -1,0 +1,8 @@
+﻿@attribute [Route(Routes.Home)]
+@inject AppState AppState
+
+
+@foreach (var player in AppState.Players)
+{
+    <MudText>@player.Name</MudText>
+}
