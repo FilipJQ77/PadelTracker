@@ -8,13 +8,16 @@
 <MudLayout>
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
-        Padel Tracker
+        <MudStack Row="true" Spacing="2">
+            <MudText>Padel Tracker</MudText>
+            <MudIcon Icon="@Icons.Material.Filled.SportsTennis"/>
+        </MudStack>
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen">
+    <MudDrawer ClipMode="DrawerClipMode.Always" @bind-Open="@_drawerOpen">
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large">
+        <MudContainer Class="pt-4" MaxWidth="MaxWidth.Large">
             @Body
         </MudContainer>
     </MudMainContent>
